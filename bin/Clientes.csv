@@ -1,9 +1,15 @@
+Client_ced,Client_name,Client_last_name,Client_email,Client_rented,Client_adress,Client_active
 39675194,Jordana,Capponer,jcapponer0@over-blog.com,10,51 Sullivan Plaza,true
+18347953,Skippie,Stannion,sstannion1@freewebs.com,10,3375 Shoshone Junction,true
 12433402,Cassie,Redshaw,credshaw2@youtube.com,10,6 Corben Plaza,true
 30538192,Sarita,Ridel,sridel3@si.edu,8,629 Hoard Plaza,true
 10024113,Nolie,Bedle,nbedle4@jiathis.com,9,170 South Place,true
+31243754,Deane,Reedshaw,dreedshaw5@about.com,3,90561 Basil Trail,true
+17090013,Marylin,Cardoso,mcardoso6@apache.org,1,5 Bunker Hill Pass,true
 29414242,Sharline,Thirlwall,sthirlwall7@1und1.de,5,04 Westend Junction,false
-"31544978","Angelo","Maiale","angelomaiale@gmail.com",3,AV 8 Santa Rita,TRUE,
+12168520,Beckie,Vinck,bvinck8@qq.com,4,083 Mallory Trail,false
+6395048,Matthew,Edeson,medeson9@irs.gov,4,3212 Harbort Pass,true
+10754794,Hiram,Grimoldby,hgrimoldbya@telegraph.co.uk,6,6 Fuller Center,false
 14488336,Daron,Merriday,dmerridayb@godaddy.com,2,43 Pepper Wood Circle,false
 29485972,Binnie,Fenty,bfentyc@reddit.com,9,5221 Welch Road,true
 29343155,Elmer,Storre,estorred@businessweek.com,8,1494 Forster Center,true
@@ -93,9 +99,3 @@
 30946705,Erinn,Erett,eerett2p@phoca.cz,5,60450 Jackson Center,false
 21122123,Zacharie,Beastall,zbeastall2q@nsw.gov.au,3,3009 Dottie Place,true
 1031606,Jerry,Valti,jvalti2r@baidu.com,5,43 Hoepker Place,true
-8,Angelo,Maiale,Rita,0,Av,Santa
-8,a,a,Rita,0,Av,Santa
-0,a,a,,0,a,
-8,a,a,rita,0,Av,santa
-0,a,a,,0,,
-31544978,a,a,angelomaiale@gmail.com,2,Av 8 Santa Rita,TRUE

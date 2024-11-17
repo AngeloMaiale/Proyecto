@@ -596,68 +596,45 @@ int main() {
     string nombreArchivoVehiculos = "./bin/Vehiculos.csv";
     string nombreArchivoClientes = "./bin/Clientes.csv";
     string nombreArchivoRepuestos = "./bin/Repuestos.csv";
-    char opcionGuardar; 
+
+    char confirmar;
+    bool cambiosRealizados = false;
+
     Vehiculo* vehiculos = nullptr;
     int numVehiculos = 0;
     string placaBuscada; 
-    cout << "Ingrese la placa del vehículo a consultar: "; 
-    cin >> placaBuscada; 
-    mostrarVehiculo(vehiculos, numVehiculos, placaBuscada);
-    cout << "¿Desea guardar los cambios realizados? (s/n): "; 
-    cin >> opcionGuardar; 
-    if (opcionGuardar == 's' || opcionGuardar == 'S') { 
-        escribirVehiculos(nombreArchivoVehiculos, vehiculos, numVehiculos); 
-        cout << "Cambios guardados." << endl; 
-    } else { 
-        cout << "Cambios descartados." << endl; 
-    } 
-    delete[] vehiculos;
+
     Cliente* clientes = nullptr;
-    int numClientes = 0;
-    leerClientes(nombreArchivoClientes, clientes, numClientes); 
+    int numClientes = 0; 
     int cedulaBuscada; 
-    cout << "Ingrese la cédula del cliente a consultar: "; 
-    cin >> cedulaBuscada; 
-    mostrarCliente(clientes, numClientes, cedulaBuscada);
-    cout << "¿Desea guardar los cambios realizados? (s/n): "; 
-    cin >> opcionGuardar; 
-    if (opcionGuardar == 's' || opcionGuardar == 'S') { 
-        escribirClientes(nombreArchivoClientes, clientes, numClientes); 
-        cout << "Cambios guardados." << endl; 
-    } else { 
-        cout << "Cambios descartados." << endl; 
-    } 
-    delete[] clientes;
+
     Repuesto* repuestos = nullptr;
     int numRepuestos = 0;
-    leerRepuestos(nombreArchivoRepuestos, repuestos, numRepuestos); 
     string modeloBuscado; 
-    cout << "Ingrese el modelo del repuesto a consultar: "; 
-    cin >> modeloBuscado; 
-    mostrarRepuesto(repuestos, numRepuestos, modeloBuscado);
-    cout << "¿Desea guardar los cambios realizados? (s/n): "; 
-    cin >> opcionGuardar; 
-    if (opcionGuardar == 's' || opcionGuardar == 'S') { 
-        escribirRepuestos(nombreArchivoRepuestos, repuestos, numRepuestos); 
-        cout << "Cambios guardados." << endl; 
-    } else { cout << "Cambios descartados." << endl; 
-    }
-    delete[] repuestos;
 
-    int opcion,Nlinea;
-    cout << "Que archivo desea gestionar: " << endl;
-    cout << "1. Vehiculos" << endl;
-    cout << "2. Clientes" << endl;
-    cout << "3. Repuestos" << endl;
-    
-    cin >> opcion;
-    switch (opcion) {
+    leerClientes(nombreArchivoClientes, clientes, numClientes);
+    leerRepuestos(nombreArchivoRepuestos, repuestos, numRepuestos);
+    leerVehiculos(nombreArchivoVehiculos, vehiculos, numVehiculos);
+
+    while (true) {
+        cout << "Que archivo desea gestionar: " << endl;
+        cout << "1. Vehiculos" << endl;
+        cout << "2. Clientes" << endl;
+        cout << "3. Repuestos" << endl;
+        int opcion, Nlinea;
+        cin >> opcion;
+
+        if (opcion == 4) {
+            break; // Salir del bucle
+        }
+        switch (opcion) {
         case 1: 
             cout<<"Que quiere hacer con el archivo:"<<endl;
             cout<<"1.Borrar datos"<<endl;
             cout<<"2.Actualizar datos"<<endl;
             cout<<"3.Insertar datos"<<endl;
-            cout<<"4.Regresar"<<endl;
+            cout<<"4. Mostrar o buscar datos"<<endl;
+            cout<<"5. Regresar"<<endl;
             cin>>opcion;
             switch (opcion){
                 case 1:
@@ -712,17 +689,35 @@ int main() {
                             break;}
                 break;
                 case 4:
-                    break;
-                
-                break;}
-        break;
+                cout << "Ingrese la placa del vehículo a consultar: "; 
+                cin >> placaBuscada; 
+                mostrarVehiculo(vehiculos, numVehiculos, placaBuscada);
+                break;
 
+            case 5:
+                continue;
+        }
+
+        if (cambiosRealizados) {
+            cout << "¿Desea guardar los cambios realizados? (s/n): ";
+            char confirmar;
+            cin >> confirmar;
+            if (confirmar == 's' || confirmar == 'S') {
+                escribirVehiculos(nombreArchivoVehiculos, vehiculos, numVehiculos);
+                cout << "Cambios guardados." << endl;
+            } else {
+                cout << "Cambios no guardados." << endl;
+            }
+            cambiosRealizados = false; 
+        break;
+        }
         case 2: 
             cout<<"Que quiere hacer con el archivo:"<<endl;
             cout<<"1.Borrar datos"<<endl;
             cout<<"2.Actualizar datos"<<endl;
             cout<<"3.Insertar datos"<<endl;
-            cout<<"4.Regresar"<<endl;
+            cout<<"4. Mostrar o buscar datos"<<endl;
+            cout<<"5. Regresar"<<endl;
             cin>>opcion;
             switch (opcion){
                 case 1:
@@ -781,15 +776,35 @@ int main() {
                             break;}
                 break;
                 case 4:
-                    break;
-            }      
-        break; 
+                cout << "Ingrese la cédula del cliente a consultar: "; 
+                cin >> cedulaBuscada; 
+                mostrarCliente(clientes, numClientes, cedulaBuscada);
+                break;
+
+            case 5:
+                continue;
+        }
+
+        if (cambiosRealizados) {
+            cout << "¿Desea guardar los cambios realizados? (s/n): ";
+            char confirmar;
+            cin >> confirmar;
+            if (confirmar == 's' || confirmar == 'S') {
+                escribirClientes(nombreArchivoClientes, clientes, numClientes); 
+                cout << "Cambios guardados." << endl;
+            } else {
+                cout << "Cambios no guardados." << endl;
+            }
+            cambiosRealizados = false; 
+        }
+        break;
         case 3: 
             cout<<"Que quiere hacer con el archivo:"<<endl;
             cout<<"1.Borrar datos"<<endl;
             cout<<"2.Actualizar datos"<<endl;
             cout<<"3.Insertar datos"<<endl;
-            cout<<"4.Regresar"<<endl;
+            cout<<"4. Mostrar o buscar datos"<<endl;
+            cout<<"5. Regresar"<<endl;
             cin>>opcion;
             switch (opcion){
                 case 1:
@@ -842,13 +857,36 @@ int main() {
                 }
                 break;
                 case 4:
-                    break;
+                cout << "Ingrese el modelo del repuesto a consultar: "; 
+                cin >> modeloBuscado; 
+                mostrarRepuesto(repuestos, numRepuestos, modeloBuscado);
+                break;
+
+            case 5:
+                continue;
+        }
+
+        if (cambiosRealizados) {
+            cout << "¿Desea guardar los cambios realizados? (s/n): ";
+            char confirmar;
+            cin >> confirmar;
+            if (confirmar == 's' || confirmar == 'S') {
+                escribirRepuestos(nombreArchivoRepuestos, repuestos, numRepuestos);  
+                cout << "Cambios guardados." << endl;
+            } else {
+                cout << "Cambios no guardados." << endl;
             }
-        break;            
-        default:
-            cout << "Opcion no valida." << endl; 
+            cambiosRealizados = false; 
+        }
+        break;         
+        default: 
+            cout << "Opción no válida. Intente de nuevo." << endl;
+            continue;
             break; 
+        }
+    delete[] vehiculos;
+    delete[] clientes;
+    delete[] repuestos;
     }
-    
     return 0;       
 }

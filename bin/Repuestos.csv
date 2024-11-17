@@ -1,10 +1,14 @@
+Parts_model,Parts_make,Parts_name,Parts_car_model,Parts_year,Parts_price,Parts_stock
+555-49-8514,Chevrolet,enim sit,Malibu,2009,2359.67,78
+837-02-1608,Chevrolet,tempor,Astro,1999,2849.47,32
 526-55-3822,Ford,integer non,Taurus,1999,3664.31,0
 509-91-9159,Saturn,nulla,Ion,2004,4870.52,82
 813-38-4498,BMW,sed,M5,2007,7197.66,75
+836-55-3768,Kia,turpis eget,Rio,2008,3822.41,96
 926-76-2810,Pontiac,imperdiet sapien,Bonneville,1968,843.1,36
 609-99-1363,Chrysler,in,Pacifica,2005,6933.68,1
-"","a","a","a",0,6.72623e-44,721,
-"a","a","a","a",5,1,1,
+648-36-6836,Infiniti,phasellus sit,G,2000,1921.51,75
+042-56-9581,Jeep,quis justo,Liberty,2009,3008.02,5
 504-08-3557,GMC,in libero,Jimmy,1992,2936.12,58
 550-66-0854,Saab,nascetur ridiculus,9000,1998,370.1,46
 159-09-2983,Acura,amet sapien,Integra,1992,8115.4,41
@@ -95,4 +99,3 @@
 016-08-4225,Dodge,orci vehicula,Ram Van 3500,1995,9417.43,72
 258-83-7532,Infiniti,blandit,QX,2009,3260.63,96
 375-75-5846,Lexus,dui maecenas,LS,1993,162.14,87
-a,a,a,a,1,1,1
