@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/Usuario/Proyecto/Proyecto",
-      "program": "c:/Users/Usuario/Proyecto/Proyecto/build/Debug/outDebug",
+      "cwd": "c:/Users/Usuario/Proyecto/src",
+      "program": "c:/Users/Usuario/Proyecto/src/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
