@@ -13,7 +13,7 @@ void actualizarColumnaClientes(int Nlinea, int ind, const string& ValorN) {
 
     if (Archivo.is_open() && archivoTemp.is_open()) {
         string linea;
-        int contador = 1;
+        int contador = 0;
         while (getline(Archivo, linea)) {
             if (contador == Nlinea) {
                 string nombre, apellido, email, direccion, bolc;
@@ -91,7 +91,7 @@ void actualizarFilaClientes(int Nlinea) {
     ifstream archivo(nombreArchivo);
     ofstream archivoTemp("temp.csv");
     string linea;
-    int i = 1;
+    int i = 0;
     string nombre, apellido, direccion, email, TFC;
     int cedula, nVehiculosRentados;
 
@@ -158,17 +158,16 @@ void actualizarFilaClientes(int Nlinea) {
 
 void insertarNuevaLineaClientes() {
     bool SoN;
-    string nombreArchivo= "./bin/Clientes.csv";
-    ofstream archivo(nombreArchivo, ios::app); 
+    string nombreArchivo = "./bin/Clientes.csv";
+    ofstream archivo(nombreArchivo, ios::app);
     Cliente c("", "", "", "", false, 0, 0);
     string ToFa;
     if (!archivo.is_open()) {
         cout << "Error al abrir el archivo " << nombreArchivo << endl;
         return;
     }
-
     cout << "Ingrese los detalles del cliente:\n";
-    cin.ignore();
+    cin.ignore(); 
     cout << "Nombre: ";
     string nombre;
     getline(cin, nombre);
@@ -187,8 +186,8 @@ void insertarNuevaLineaClientes() {
     c.setCedula(cedula);
     cin.ignore(); 
     cout << "Activo (TRUE para si, FALSE para no): ";
-    getline(cin,ToFa);
-    cout << "email: ";
+    getline(cin, ToFa);
+    cout << "Email: ";
     string email;
     getline(cin, email);
     c.setEmail(email);
@@ -196,21 +195,19 @@ void insertarNuevaLineaClientes() {
     int nVehiculosRentados;
     cin >> nVehiculosRentados;
     c.setVehiculosRentados(nVehiculosRentados);
-    cin.ignore();
-    cout<<"Esta seguro de los cambios que va a realizar? Se va a reemplzar el archivo con uno nuevo con los cambios realizados (1 para si, 0 para no): ";
-    cin>>SoN;
-    if(SoN==true){
-    archivo << c.getCedula() << "," << c.getNombre() << "," << c.getApellido() << "," << c.getEmail() << "," << c.getnVehiculosRentados() << "," << c.getDireccion() << ","
-            << ToFa << "\n";
-        archivo.close(); 
-    archivo.close(); 
-    cout << "Linea insertada en " << nombreArchivo << endl;
-    }
-    else{
-        cout<<"Operacion cancelada"<<endl;
+    cout << "¿Está seguro de los cambios que va a realizar? Se va a reemplazar el archivo con uno nuevo con los cambios realizados (1 para sí, 0 para no): ";
+    cin >> SoN;
+    if (SoN == true) {
+        archivo << c.getCedula() << "," << c.getNombre() << "," << c.getApellido() << "," << c.getEmail() << "," << c.getnVehiculosRentados() << "," << c.getDireccion() << ","
+                << ToFa << "\n";
+        archivo.close();
+        cout << "Linea insertada en " << nombreArchivo << endl;
+    } else {
+        cout << "Operación cancelada" << endl;
         archivo.close();
     }
 }
+
 
 void leerClientes(const string& nombreArchivo, Cliente*& clientes, int& numClientes) {
     ifstream file(nombreArchivo);

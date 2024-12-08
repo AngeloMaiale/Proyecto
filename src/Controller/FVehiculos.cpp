@@ -13,7 +13,7 @@ void actualizarColumnaVehiculos(int Nlinea, int ind, const string& ValorN) {
 
     if (Archivo.is_open() && archivoTemp.is_open()) {
         string linea;
-        int contador = 1;
+        int contador = 0;
         while (getline(Archivo, linea)) {
             if (contador == Nlinea) {
                 string bolv, modelo, marca, placa, color, fechaEntrega, motor;
@@ -108,7 +108,7 @@ void actualizarFilaVehiculos(int Nlinea) {
     ifstream archivo(nombreArchivo);
     ofstream archivoTemp("temp.csv");
     string linea;
-    int i = 1;
+    int i = 0;
     string modelo, marca, placa, color, motor, fechaEntrega, TF;
     int year, kilometraje, cedula;
     float precioRenta;
@@ -188,7 +188,7 @@ void actualizarFilaVehiculos(int Nlinea) {
 
 void insertarNuevaLineaVehiculos() {
     bool SoN;
-    string nombreArchivo= "./bin/Vehiculos.csv";
+    string nombreArchivo = "./bin/Vehiculos.csv";
     ofstream archivo(nombreArchivo, ios::app); 
     Vehiculo v("", "", "", "", "", "", 0, 0, 0, false, 0.0f);
     string ToF;
@@ -196,10 +196,10 @@ void insertarNuevaLineaVehiculos() {
         cout << "Error al abrir el archivo " << nombreArchivo << endl;
         return;
     }
-
     cout << "Ingrese los detalles del vehiculo:\n";
     cout << "Modelo: ";
     string modelo;
+    cin.ignore();
     getline(cin, modelo);
     v.setModelo(modelo);
     cout << "Marca: ";
@@ -218,22 +218,22 @@ void insertarNuevaLineaVehiculos() {
     int year;
     cin >> year;
     v.setYear(year);
+    cout << "Kilometraje: ";
     int kilometraje;
     cin >> kilometraje;
     v.setKilometraje(kilometraje);
-    cin.ignore();
+    cin.ignore(); 
     cout << "Rentado (TRUE para si, FALSE para no): ";
     cin >> ToF;
+    cin.ignore(); 
     cout << "Motor: ";
     string motor;
-    cin.ignore(); 
     getline(cin, motor);
     v.setMotor(motor);
     cout << "Precio de renta: ";
     float precioRenta;
     cin >> precioRenta;
     v.setPrecioRenta(precioRenta);
-    cin.ignore();
     cout << "Cedula del cliente: ";
     int cedula;
     cin >> cedula;
@@ -243,21 +243,20 @@ void insertarNuevaLineaVehiculos() {
     string fechaEntrega;
     getline(cin, fechaEntrega);
     v.setFechaEntrega(fechaEntrega);
-
-    cout<<"Esta seguro de los cambios que va a realizar? Se va a reemplzar el archivo con uno nuevo con los cambios realizados (1 para si, 0 para no): ";
-    cin>>SoN;
-    if(SoN==true){
-    archivo << v.getModelo() << "," << v.getMarca() << "," << v.getPlaca() << ","<< v.getColor() << ","
-    << v.getYear() << "," << v.getKilometraje() << "," << (v.isRentado() ? "TRUE" : "FALSE") << "," 
-    << v.getMotor() << "," << v.getPrecioRenta() << "," << v.getCedula() << "," << v.getFechaEntrega() << "\n";
-    archivo.close();
-    cout << "Linea insertada en " << nombreArchivo << endl;
-    }
-    else{
-        cout<<"Operacion cancelada"<<endl;
+    cout << "¿Está seguro de los cambios que va a realizar? Se va a reemplazar el archivo con uno nuevo con los cambios realizados (1 para sí, 0 para no): ";
+    cin >> SoN;
+    if (SoN) {
+        archivo << v.getModelo() << "," << v.getMarca() << "," << v.getPlaca() << "," << v.getColor() << ","
+                << v.getYear() << "," << v.getKilometraje() << "," << (v.isRentado() ? "TRUE" : "FALSE") << "," 
+                << v.getMotor() << "," << v.getPrecioRenta() << "," << v.getCedula() << "," << v.getFechaEntrega() << "\n";
+        archivo.close();
+        cout << "Linea insertada en " << nombreArchivo << endl;
+    } else {
+        cout << "Operación cancelada" << endl;
         archivo.close();
     }
 }
+
 
 void leerVehiculos(const string& nombreArchivo, Vehiculo*& vehiculos, int& numVehiculos) {
     ifstream file(nombreArchivo);

@@ -13,7 +13,7 @@ void borrarLinea(const string& nombreArchivo, int Nlinea) {
     ifstream archivo(nombreArchivo);
     ofstream archivoTemp("temp.csv");
     string linea;
-    int i = 1;
+    int i = 0;
 
     if (!archivo.is_open()) {
     cout << "Error al abrir el archivo " << nombreArchivo << endl;

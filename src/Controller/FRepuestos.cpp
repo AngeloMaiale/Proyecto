@@ -13,7 +13,7 @@ void actualizarColumnaRepuestos(int Nlinea, int ind, const string& ValorN) {
 
     if (Archivo.is_open() && archivoTemp.is_open()) {
         string linea;
-        int contador = 1;
+        int contador = 0;
         while (getline(Archivo, linea)) {
             if (contador == Nlinea) {
                 string partModel, marca, nombre, modelo, bolr;
@@ -92,7 +92,7 @@ void actualizarFilaRepuestos(int Nlinea) {
     ifstream archivo(nombreArchivo);
     ofstream archivoTemp("temp.csv");
     string linea;
-    int i = 1;
+    int i = 0;
     string modelo, marca, nombre, partModel;
     int yearCarro, existencias;
     float precio;
