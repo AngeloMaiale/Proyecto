@@ -1,188 +1,149 @@
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include <vector>
-#include <filesystem>
-#include <ctime>
+#include <cstdlib>
+#include "../Model/CUsuario.h"  
 
 using namespace std;
-
-class Usuario {
-public:
-    string nombre;
-    string password;
-    string rol; // "Admin", "Manager", "Empleado"
-
-    Usuario() {}
-
-    Usuario(const string& n, const string& p, const string& r) : nombre(n), password(p), rol(r) {}
-
-    bool autenticar(const string& p) {
-        return password == p;
-    }
-
-    bool tienePermiso(const string& permiso) {
-        if (rol == "Admin") {
-            return true; 
-        } else if (rol == "Manager") {
-            return (permiso == "agregarCliente" || permiso == "agregarVehiculo");
-        } else if (rol == "Empleado") {
-            return (permiso == "consultarDatos");
+void registro(const string& nombre, const string& apellido, int opcion1) {
+    ofstream archivo("./Model/Usuario/Usuarios.csv", ios::app);
+    if (archivo.is_open()) {
+        string rol;
+        if (opcion1 == 1) {
+            rol = "Admin";
+        } else if (opcion1 == 2) {
+            rol = "Manager";
+        } else if (opcion1 == 3) {
+            rol = "Empleado";
         }
-        return false;
+        archivo << nombre << " " << apellido << "," << rol << "\n";
+        archivo.close();
+    } else {
+        cerr << "No se pudo abrir el archivo para escribir." << endl;
     }
-};
-
-class Cliente {
-public:
-    string id;
-    string nombre;
-    string telefono;
-
-    void agregar() {
-        ofstream archivo("./bin/Clientes.csv", ios::app);
-        if (archivo.is_open()) {
-            archivo << id << "," << nombre << "," << telefono << endl;
-            archivo.close();
-            cout << "Cliente agregado exitosamente." << endl;
-        } else {
-            cout << "Error al abrir el archivo de clientes." << endl;
-        }
-    }
-};
-
-class Repuesto {
-public:
-    string id;
-    string nombre;
-    double precio;
-
-    void agregar() {
-        ofstream archivo("./bin/Repuestos.csv", ios::app);
-        if (archivo.is_open()) {
-            archivo << id << "," << nombre << "," << precio << endl;
-            archivo.close();
-            cout << "Repuesto agregado exitosamente." << endl;
-        } else {
-            cout << "Error al abrir el archivo de repuestos." << endl;
-        }
-    }
-};
-
-class Vehiculo {
-public:
-    string id;
-    string marca;
-    string modelo;
-
-    void agregar() {
-        ofstream archivo("./bin/Vehiculos.csv", ios::app);
-        if (archivo.is_open()) {
-            archivo << id << "," << marca << "," << modelo << endl;
-            archivo.close();
-            cout << "Vehículo agregado exitosamente." << endl;
-        } else {
-            cout << "Error al abrir el archivo de vehículos." << endl;
-        }
-    }
-};
-
-bool autenticarUsuario(const string& nombre, const string& password, Usuario& usuario) {
-    ifstream archivo("./bin/Usuarios.csv");
-    string linea;
-    while (getline(archivo, linea)) {
-        stringstream ss(linea);
-        string user, pass, rol;
-        getline(ss, user, ',');
-        getline(ss, pass, ',');
-        getline(ss, rol, ',');
-        if (user == nombre && pass == password) {
-            usuario = Usuario(user, pass, rol);
-            return true;
-        }
-    }
-    return false;
 }
 
-int main() {
-    Usuario usuario;
-    string nombre, password;
-
-    cout << "Ingrese su nombre de usuario: ";
-    cin >> nombre;
-    cout << "Ingrese su contraseña: ";
-    cin >> password;
-
-    if (!autenticarUsuario(nombre, password, usuario)) {
-        cout << "Autenticación fallida. Saliendo del programa." << endl;
-        return 1;
+void borrarRegistro() {
+    int confirmar;
+    ifstream input("../Model/Usuario/Usuarios.csv");
+    ofstream temp("../Model/Usuario/temp.csv");
+    int numero_fila = 1;
+    int filaABorrar;
+    cout << "Ingrese la fila a borrar: "; cin >> filaABorrar;
+    if (filaABorrar == 1) {
+        cout << "No se puede borrar la fila 1 ya que es la cabecera del archivo..." << endl;
+        return;
     }
-
-    int opcion;
-    do {
-        cout << "Seleccione una opción:\n";
-        cout << "1. Agregar Cliente\n";
-        cout << "2. Agregar Repuesto\n";
-        cout << "3. Agregar Vehículo\n";
-        cout << "4. Salir\n";
-        cin >> opcion;
-
-        switch (opcion) {
-             case 1: 
-                if (usuario.tienePermiso("agregarCliente")) {
-                    Cliente cliente;
-                    cout << "Ingrese ID del cliente: ";
-                    cin >> cliente.id;
-                    cout << "Ingrese nombre del cliente: ";
-                    cin >> cliente.nombre;
-                    cout << "Ingrese teléfono del cliente: ";
-                    cin >> cliente.telefono;
-                    cliente.agregar(); 
-                } else {
-                    cout << "No tiene permiso para agregar clientes." << endl;
-                }
-                break;
-
-            case 2: 
-                if (usuario.tienePermiso("agregarRepuesto")) {
-                    Repuesto repuesto;
-                    cout << "Ingrese ID del repuesto: ";
-                    cin >> repuesto.id;
-                    cout << "Ingrese nombre del repuesto: ";
-                    cin >> repuesto.nombre;
-                    cout << "Ingrese precio del repuesto: ";
-                    cin >> repuesto.precio;
-                    repuesto.agregar(); 
-                } else {
-                    cout << "No tiene permiso para agregar repuestos." << endl;
-                }
-                break;
-
-            case 3: 
-                if (usuario.tienePermiso("agregarVehiculo")) {
-                    Vehiculo vehiculo;
-                    cout << "Ingrese ID del vehículo: ";
-                    cin >> vehiculo.id;
-                    cout << "Ingrese marca del vehículo: ";
-                    cin >> vehiculo.marca;
-                    cout << "Ingrese modelo del vehículo: ";
-                    cin >> vehiculo.modelo;
-                    vehiculo.agregar(); 
-                } else {
-                    cout << "No tiene permiso para agregar vehículos." << endl;
-                }
-                break;
-
-            case 4:
-                cout << "Saliendo del programa." << endl;
-                break;
-
-            default:
-                cout << "Opción no válida. Intente de nuevo." << endl;
-                break;
+    string linea;
+    while (getline(input, linea)) {
+        if (numero_fila != filaABorrar) {
+            temp << linea << endl;
         }
-    } while (opcion != 4);
+        numero_fila++;
+    }
+    input.close();
+    temp.close();
+    cout << "Desea confirmar el cambio?  1. Si |  2. No" << endl; cin >> confirmar;
+    if (confirmar == 1) {
+        remove("../Model/Usuario/Usuarios.csv");
+        rename("../Model/Usuario/temp.csv", "../model/Usuario/Usuarios.csv");
+    } else if (confirmar == 2) {
+        remove("../Model/Usuario/temp.csv");
+    }
+}
 
-    return 0;
+void leerUsuariosCSV() {
+    ifstream archivo("../Model/Usuario/Usuarios.csv");
+    if (archivo.is_open()) {
+        string linea;
+        cout << "Lista de usuarios registrados:" << endl;
+        while (getline(archivo, linea)) {
+            cout << linea << endl;
+        }
+        archivo.close();
+    } else {
+        cerr << "No se pudo abrir el archivo para leer." << endl;
+    }
+}
+class Admin {
+public:
+    void usuarios_admin();
+};
+
+class Manager {
+public:
+    void usuarios_manager();
+};
+
+class Empleado {
+public:
+    void usuarios_empleado();
+};
+void Admin::usuarios_admin() {
+    int opcion;
+    cout << "USUARIOS" << endl;
+    cout << "Que accion desea realizar? 1. Registro | 2. Borrar | 3. Consulta" << endl; cin >> opcion;
+    string nombre;
+    string apellido;
+    int opcion1;
+    switch (opcion) {
+        case 1:
+            cout << "Ingrese el nombre del usuario: "; cin >> nombre;
+            cout << "Ingrese el apellido del usuario: "; cin >> apellido;
+            cout << "Ingrese el tipo de usuario: 1.Admin | 2.Manager | 3.Empleado" << endl; cin >> opcion1;
+            registro(nombre, apellido, opcion1);
+            break;
+        case 2:
+            borrarRegistro();
+            break;
+        case 3:
+            leerUsuariosCSV();
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+    }
+}
+void Manager::usuarios_manager() {
+    int opcion;
+    cout << "USUARIOS" << endl;
+    cout << "Que accion desea realizar? 1. Registro | 2. Borrar | 3. Consulta" << endl; cin >> opcion;
+    string nombre;
+    string apellido;
+    int opcion1 = 0;
+    int opcion2;
+    switch (opcion) {
+        case 1:
+            cout << "Ingrese el nombre del usuario: "; cin >> nombre;
+            cout << "Ingrese el apellido del usuario: "; cin >> apellido;
+            cout << "Ingrese el tipo de usuario: 1.Manager | 2.Empleado: " << endl; cin >> opcion2;
+            if (opcion2 < 1 || opcion2 > 2) {
+                cout << "Opcion no valida" << endl;
+            } else {
+                opcion1 = 1 + opcion2; 
+                registro(nombre, apellido, opcion1);
+            }
+            break;
+        case 2:
+            cout << "No tiene permiso para borrar usuarios." << endl;
+            break;
+        case 3:
+            leerUsuariosCSV();
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+    }
+}
+void Empleado::usuarios_empleado() {
+    int opcion;
+    cout << "USUARIOS" << endl;
+    cout << "Que accion desea realizar? 1. Consultar" << endl; cin >> opcion;
+    switch (opcion) {
+        case 1:
+            leerUsuariosCSV(); 
+            break;
+        default:
+            cout << "Opcion no valida" << endl;
+    }
 }

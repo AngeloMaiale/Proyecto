@@ -1,18 +1,45 @@
 #include <iostream>
 #include <fstream>
+#include <filesystem>
 #include <sstream>
 #include <string>
 #include <cstdlib>
 #include "../Model/CClientes.h"
 #include "../Model/CVehiculos.h"
 #include "../Model/CRepuestos.h"
+#include "../Model/CUsuario.h"
 #include "../Controller/FBorrar.cpp"
 #include "../Controller/FVehiculos.cpp"
 #include "../Controller/FClientes.cpp"
 #include "../Controller/Frepuestos.cpp"
+#include "../Controller/FUsuario.cpp"
 using namespace std;
 
 void Consola() {
+    auto obtenerFechaActual = []() {
+        time_t t = time(nullptr);
+        tm* tmPtr = localtime(&t);
+        char buffer[11];
+        strftime(buffer, sizeof(buffer), "%Y-%m-%d", tmPtr);
+        return string(buffer);
+    };
+
+    auto crearCopiaDeSeguridad = [&](const string& nombreArchivo) {
+        string fecha = obtenerFechaActual();
+        string nombreCopia = "./copiaProyecto/" + fecha + "_" + nombreArchivo;
+
+        filesystem::create_directory("./copiaProyecto");
+
+        ifstream archivoOriginal(nombreArchivo, ios::binary);
+        ofstream archivoCopia(nombreCopia, ios::binary);
+
+        if (archivoOriginal && archivoCopia) {
+            archivoCopia << archivoOriginal.rdbuf(); 
+            cout << "Copia de seguridad creada: " << nombreCopia << endl;
+        } else {
+            cout << "Error al crear la copia de seguridad." << endl;
+        }
+    };
     string nombreArchivoVehiculos = "./bin/Vehiculos.csv";
     string nombreArchivoClientes = "./bin/Clientes.csv";
     string nombreArchivoRepuestos = "./bin/Repuestos.csv";
@@ -65,8 +92,9 @@ void Consola() {
             cout<<"2.Actualizar datos"<<endl;
             cout<<"3.Insertar datos"<<endl;
             cout<<"4.Mostrar o buscar datos"<<endl;
-            cout<<"5.Regresar"<<endl;
-            cout<<"6.Cerrar el programa"<<endl;
+            cout<<"5.Crear un respaldo"<<endl;
+            cout<<"6.Regresar"<<endl;
+            cout<<"7.Cerrar el programa"<<endl;
             cin>>opcion1;
             switch (opcion1){
                 case 1:
@@ -165,14 +193,19 @@ void Consola() {
                 continue;
 
             case 5:
+                crearCopiaDeSeguridad("nombreArchivoVehiculos.csv"); // Cambia el nombre del archivo según sea necesario
                 continue;
             case 6:
-                wh=false;
+                wh = false;
                 break;
+            case 7:
+                continue;
             default:
                 cout << "Opcion no valida. Intente de nuevo." << endl;
                 continue; 
         }
+        break;
+
         continue;
         case 2: 
             cout<<"Que quiere hacer con el archivo:"<<endl;
@@ -180,8 +213,9 @@ void Consola() {
             cout<<"2.Actualizar datos"<<endl;
             cout<<"3.Insertar datos"<<endl;
             cout<<"4.Mostrar o buscar datos"<<endl;
-            cout<<"5.Regresar"<<endl;
-            cout<<"6.Cerrar el programa"<<endl;
+            cout<<"5.Crear un respaldo"<<endl;
+            cout<<"6.Regresar"<<endl;
+            cout<<"7.Cerrar el programa"<<endl;
             cin>>opcion2;
             switch (opcion2){
                 case 1:
@@ -278,10 +312,13 @@ void Consola() {
                 continue;
 
             case 5:
+                crearCopiaDeSeguridad("nombreArchivoVehiculos.csv"); // Cambia el nombre del archivo según sea necesario
                 continue;
             case 6:
-                wh=false;
+                wh = false;
                 break;
+            case 7:
+                continue; 
             default:
                 cout << "Opcion no valida. Intente de nuevo." << endl;
                 continue; 
@@ -293,8 +330,9 @@ void Consola() {
             cout<<"2.Actualizar datos"<<endl;
             cout<<"3.Insertar datos"<<endl;
             cout<<"4.Mostrar o buscar datos"<<endl;
-            cout<<"5.Regresar"<<endl;
-            cout<<"6.Cerrar el programa"<<endl;
+            cout<<"5.Crear un respaldo"<<endl;
+            cout<<"6.Regresar"<<endl;
+            cout<<"7.Cerrar el programa"<<endl;
             cin>>opcion3;
             switch (opcion3){
                 case 1:
@@ -387,14 +425,18 @@ void Consola() {
                 mostrarRepuesto(repuestos, numRepuestos, modeloBuscado);
                 continue;
             case 5:
+                crearCopiaDeSeguridad("nombreArchivoVehiculos.csv"); // Cambia el nombre del archivo según sea necesario
                 continue;
             case 6:
-                wh=false;
+                wh = false;
                 break;
+            case 7:
+                continue; 
             default:
                 cout << "Opcion no valida. Intente de nuevo." << endl;
                 continue; 
         }
+        break;
         continue;   
         case 4:
             wh=false;
