@@ -6,25 +6,87 @@
 
 using namespace std;
 
-struct Vehiculo {
+class Vehiculo {
+private:
     string modelo, marca, placa, color, fechaEntrega;
     int year, kilometraje, cedula;
     bool rentado;
     float motor, precioRenta;
+
+public:
+    Vehiculo(string modelo, string marca, string placa, string color, string fechaEntrega,
+             int year, int kilometraje, int cedula, bool rentado, float motor, float precioRenta)
+        : modelo(modelo), marca(marca), placa(placa), color(color), fechaEntrega(fechaEntrega),
+          year(year), kilometraje(kilometraje), cedula(cedula), rentado(rentado),
+          motor(motor), precioRenta(precioRenta) {}
+
+    string getModelo() const { return modelo; }
+    string getMarca() const { return marca; }
+    string getPlaca() const { return placa; }
+    string getColor() const { return color; }
+    string getFechaEntrega() const { return fechaEntrega; }
+    int getYear() const { return year; }
+    int getKilometraje() const { return kilometraje; }
+    int getCedula() const { return cedula; }
+    bool isRentado() const { return rentado; }
+    float getMotor() const { return motor; }
+    float getPrecioRenta() const { return precioRenta; }
+
+    // Métodos de modificación
+    void setKilometraje(int km) { kilometraje = km; }
+    void setRentado(bool estado) { rentado = estado; }
 };
 
-struct Cliente {
+class Cliente {
+private:
     string nombre, apellido, direccion, email;
     bool activo;
     int nVehiculosRentados, cedula;
+
+public:
+    
+    Cliente(string nombre, string apellido, string direccion, string email,
+            bool activo, int nVehiculosRentados, int cedula)
+        : nombre(nombre), apellido(apellido), direccion(direccion), email(email),
+          activo(activo), nVehiculosRentados(nVehiculosRentados), cedula(cedula) {}
+
+    string getNombre() const { return nombre; }
+    string getApellido() const { return apellido; }
+    string getDireccion() const { return direccion; }
+    string getEmail() const { return email; }
+    bool isActivo() const { return activo; }
+    int getNVehiculosRentados() const { return nVehiculosRentados; }
+    int getCedula() const { return cedula; }
+
+    void setActivo(bool estado) { activo = estado; }
+    void incrementarVehiculosRentados() { nVehiculosRentados++; }
 };
 
-struct Repuesto {
+class Repuesto {
+private:
     string modelo, marca, nombre, partModel;
     int yearCarro, existencias;
     float precio;
-};
 
+public:
+    // Constructor
+    Repuesto(string modelo, string marca, string nombre, string partModel,
+             int yearCarro, int existencias, float precio)
+        : modelo(modelo), marca(marca), nombre(nombre), partModel(partModel),
+          yearCarro(yearCarro), existencias(existencias), precio(precio) {}
+
+    // Métodos de acceso
+    string getModelo() const { return modelo; }
+    string getMarca() const { return marca; }
+    string getNombre() const { return nombre; }
+    string getPartModel() const { return partModel; }
+    int getYearCarro() const { return yearCarro; }
+    int getExistencias() const { return existencias; }
+    float getPrecio() const { return precio; }
+
+    // Métodos de modificación
+    void setExistencias(int existencias) { this->existencias = existencias; }
+};
 void Cerrar(){
     exit(0);
 }
